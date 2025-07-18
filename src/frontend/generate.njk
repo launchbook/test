@@ -1,0 +1,99 @@
+<!-- 🌟 LaunchBook AI – Final Premium Generator Layout -->
+<div class="max-w-7xl mx-auto px-4 py-10">
+  <!-- 💎 Header -->
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">LaunchBook AI – Premium eBook Generator</h1>
+    <div class="flex gap-4 items-center">
+      <div class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">75 / 1000 credits</div>
+      <button class="text-sm font-medium hover:underline">👤 Profile</button>
+      <button class="bg-purple-600 text-white px-4 py-2 rounded-xl shadow hover:bg-purple-700">Upgrade to Pro</button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- 🚀 Left Generator Panel -->
+    <div class="space-y-6">
+      <div>
+        <input type="url" class="w-full px-4 py-3 border rounded-xl" placeholder="Paste your blog/article URL here..." />
+      </div>
+      <div class="flex gap-4">
+        <label class="flex items-center gap-2">
+          <input type="radio" name="output_format" value="pdf" checked /> PDF
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" name="output_format" value="epub" /> EPUB
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" name="output_format" value="kindle" disabled class="opacity-50" /> Kindle (Pro/Agency only)
+        </label>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="text" class="w-full px-4 py-2 border rounded-xl" placeholder="Author Name" />
+        <input type="text" class="w-full px-4 py-2 border rounded-xl" placeholder="Book Title" />
+      </div>
+      <textarea rows="2" class="w-full px-4 py-2 border rounded-xl" placeholder="Brief description..."></textarea>
+      <textarea rows="2" class="w-full px-4 py-2 border rounded-xl" placeholder="AI instruction or style preference..."></textarea>
+
+      <!-- 🎯 Audience / Tone / Purpose -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <select class="w-full px-4 py-2 border rounded-xl">
+          <option>Audience</option><option>Students</option><option>Entrepreneurs</option>
+        </select>
+        <select class="w-full px-4 py-2 border rounded-xl">
+          <option>Tone</option><option>Friendly</option><option>Professional</option>
+        </select>
+        <select class="w-full px-4 py-2 border rounded-xl">
+          <option>Purpose</option><option>Lead Magnet</option><option>Educational</option>
+        </select>
+      </div>
+
+      <!-- 💡 Formatting Options -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <select class="px-2 py-1 border rounded"> <option>Inter</option><option>Merriweather</option> </select>
+        <select class="px-2 py-1 border rounded"> <option>12pt</option><option>14pt</option> </select>
+        <select class="px-2 py-1 border rounded"> <option>1.5</option><option>2</option> </select>
+        <select class="px-2 py-1 border rounded"> <option>A4</option><option>Letter</option> </select>
+      </div>
+
+      <!-- 🔗 API & Affiliate CTA -->
+      <input class="w-full px-4 py-2 border rounded-xl" placeholder="Use your own OpenAI API Key (optional)" />
+      <div class="space-y-2">
+        <label class="text-sm font-semibold">Affiliate URL & Keywords</label>
+        <input type="url" class="w-full px-4 py-2 border rounded-xl" placeholder="Affiliate Link" />
+        <input type="text" class="w-full px-4 py-2 border rounded-xl" placeholder="Trigger Keywords (comma separated)" />
+      </div>
+
+      <!-- 🎨 Template Button + Generate -->
+      <div class="flex flex-wrap gap-4 mt-4">
+        <button class="bg-indigo-600 text-white px-4 py-2 rounded-xl">🎨 Choose Template</button>
+        <button class="bg-green-600 text-white px-4 py-2 rounded-xl">🚀 Generate</button>
+        <button class="bg-gray-600 text-white px-4 py-2 rounded-xl">💾 Save Formatting</button>
+      </div>
+    </div>
+
+    <!-- ✏️ Right Side: Editable Preview -->
+    <div class="bg-white border rounded-xl p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+      <h2 class="text-lg font-bold text-indigo-600">📖 Editable eBook Preview</h2>
+
+      <!-- 🔧 Sample Section Block -->
+      <div class="border rounded-xl p-4 space-y-2 shadow-sm bg-gray-50">
+        <input class="text-lg font-semibold w-full border-b focus:outline-none" value="Chapter 1: Introduction" />
+        <input class="text-md text-gray-800 w-full border-b focus:outline-none" value="The Power of Focus" />
+        <textarea class="w-full h-32 border rounded p-2 focus:outline-none resize-y">
+          Welcome to the first chapter of your ebook. This section covers the basics of staying focused.
+        </textarea>
+        <img src="/placeholder.jpg" class="w-full rounded-xl max-h-64 object-cover" />
+        <div class="flex justify-between text-sm text-gray-600 pt-2">
+          <button>♻️ Regenerate Section</button>
+          <div class="flex gap-2">
+            <button>🖼️ Replace Image</button>
+            <button>❌ Delete</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ➕ Add Section -->
+      <button class="w-full border rounded-xl py-3 text-center hover:bg-gray-100">➕ Add New Section</button>
+    </div>
+  </div>
+</div>
