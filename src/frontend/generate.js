@@ -510,3 +510,55 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAllSections();
 });
 
+document.querySelector("#templateCardContainer")?.addEventListener("click", async (e) => {
+  if (!e.target.classList.contains("apply-template")) return;
+
+  const card = e.target.closest(".template-card");
+  const path = card.dataset.templatePath;
+  if (!path) return;
+
+  try {
+    showToast("📥 Loading template...");
+    const res = await fetch(`/templates/${path}`);
+    const data = await res.json();
+
+    // Fill title
+    document.querySelector('[placeholder="Book Title"]').value = data.title || "";
+
+    // Dropdowns
+    document.querySelectorAll("select").forEach(select => {
+      if (select.innerText.includes("Audience")) select.value = data.audience;
+      if (select.innerText.includes("Tone")) select.value = data.tone;
+      if (select.innerText.includes("Purpose")) select.value = data.purpose;
+    });
+
+    // Formatting
+    const f = data;
+    document.getElementById("font_family").value = f.font_family || "Inter";
+    document.getElementById("font_size").value = f.font_size || "14pt";
+    document.getElementById("headline_size").value = f.headline_size || "24pt";
+    document.getElementById("text_size").value = f.text_size || "14pt";
+    document.getElementById("line_spacing").value = f.line_spacing || "1.5";
+    document.getElementById("text_align").value = f.text_align || "justify";
+    document.getElementById("margin_top").value = f.margin_top || "1in";
+    document.getElementById("margin_right").value = f.margin_right || "1in";
+    document.getElementById("margin_bottom").value = f.margin_bottom || "1in";
+    document.getElementById("margin_left").value = f.margin_left || "1in";
+
+    // Apply to preview
+    ebookSections = (data.sections || []).map(sec => ({
+      title: sec.headline || "Chapter Title",
+      headline: sec.subheadline || "",
+      text: sec.text || "",
+      image: sec.image_url || "/placeholder.jpg"
+    }));
+
+    renderAllSections();
+    applyFormattingToPreview(data);
+    closeTemplateModal();
+    showToast("✅ Template applied!");
+  } catch (err) {
+    console.error(err);
+    showToast("❌ Failed to load template", "error");
+  }
+});
