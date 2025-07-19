@@ -123,10 +123,7 @@
   <div class="bg-white max-w-4xl mx-auto mt-20 p-6 rounded-xl shadow-lg relative">
     <h2 class="text-xl font-bold mb-4 text-indigo-600">📚 Choose an eBook Template</h2>
 
-    <!-- ⬇️ Add the card here -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="templateCardContainer">
-      
-      <!-- 💡 Example Template Card (Add more as needed) -->
+<!-- 💡 Example Template Card (Add more as needed) -->
       <div class="template-card bg-white rounded-xl p-4 border shadow-sm" data-template-path="kids/the-day-the-moon-smiled.json">
         <img src="/img/kids/moon-smile.jpg" class="w-full h-40 object-cover rounded-lg mb-3" />
         <h3 class="text-lg font-semibold text-purple-600">The Day the Moon Smiled</h3>
@@ -134,6 +131,16 @@
         <button class="apply-template bg-purple-600 text-white px-3 py-1 rounded">Use This Template</button>
       </div>
 
+    <!-- ⬇️ Add the card here -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="templateCardContainer">
+
+<!-- 📂 Template Categories -->
+<div class="flex flex-wrap gap-3 mb-4">
+  <button class="filter-btn bg-indigo-100 text-indigo-700 px-3 py-1 rounded active" data-category="all">All</button>
+  <button class="filter-btn bg-pink-100 text-pink-700 px-3 py-1 rounded" data-category="kids">Kids</button>
+  <button class="filter-btn bg-green-100 text-green-700 px-3 py-1 rounded" data-category="business">Lead Magnet</button>
+  <button class="filter-btn bg-purple-100 text-purple-700 px-3 py-1 rounded" data-category="self">Affirmation</button>
+</div>
     </div>
 
     <!-- Close Button -->
@@ -175,4 +182,22 @@ document.getElementById("save_formatting_btn").addEventListener("click", saveFor
   function closeTemplateModal() {
     document.getElementById("templateModal").classList.add("hidden");
   }
+</script>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.dataset.category;
+
+      // Toggle active style
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Show/hide cards
+      document.querySelectorAll('.template-card').forEach(card => {
+        const cardCategory = card.dataset.category;
+        card.style.display = (category === "all" || cardCategory === category) ? "block" : "none";
+      });
+    });
+  });
 </script>
