@@ -129,29 +129,24 @@
       </div>
     </div>
 
-    <!-- ✏️ Right Side: Editable Preview -->
-    <div class="bg-white border rounded-xl p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-      <h2 class="text-lg font-bold text-indigo-600">📖 Editable eBook Preview</h2>
-
-      <!-- 🔧 Sample Section Block -->
-      <div class="border rounded-xl p-4 space-y-2 shadow-sm bg-gray-50">
-        <input class="text-lg font-semibold w-full border-b focus:outline-none" value="Chapter 1: Introduction" />
-        <input class="text-md text-gray-800 w-full border-b focus:outline-none" value="The Power of Focus" />
-        <textarea class="w-full h-32 border rounded p-2 focus:outline-none resize-y">
+    <!-- 🔧 Preview Block Template -->
+<div class="ebook-section border rounded-xl p-4 space-y-2 shadow-sm bg-gray-50" data-section-id="0">
+  <input class="section-title text-lg font-semibold w-full border-b" value="Chapter 1: Introduction" />
+  <input class="section-headline text-md text-gray-800 w-full border-b" value="The Power of Focus" />
+  <textarea class="section-body w-full h-32 border rounded p-2 resize-y">
 Welcome to the first chapter of your ebook. This section covers the basics of staying focused.
-        </textarea>
-        <img src="/placeholder.jpg" class="w-full rounded-xl max-h-64 object-cover" />
-        <div class="flex justify-between text-sm text-gray-600 pt-2">
-          <button>♻️ Regenerate Section</button>
-          <div class="flex gap-2">
-            <button>🖼️ Replace Image</button>
-            <button>❌ Delete</button>
-          </div>
-        </div>
-      </div>
+  </textarea>
 
-      <!-- ➕ Add Section -->
-      <button class="w-full border rounded-xl py-3 text-center hover:bg-gray-100">➕ Add New Section</button>
+  <img class="section-image w-full rounded-xl max-h-64 object-cover" src="/placeholder.jpg" />
+
+  <div class="flex justify-between text-sm text-gray-600 pt-2">
+    <div class="flex gap-3">
+      <button class="regen-text text-indigo-600 hover:underline">♻️ Regenerate Text</button>
+      <button class="regen-image text-purple-600 hover:underline">🖼️ Regenerate Image</button>
+    </div>
+    <div class="flex gap-2">
+      <button class="replace-image text-blue-600 hover:underline">📤 Replace Image</button>
+      <button class="delete-section text-red-600 hover:underline">❌ Delete</button>
     </div>
   </div>
 </div>
