@@ -73,3 +73,53 @@ async function handleExport() {
 if (document.getElementById("export_btn")) {
   document.getElementById("export_btn").addEventListener("click", handleExport);
 }
+// export.js
+
+export async function exportEbook(format, htmlContent, fileName) {
+  try {
+    showSpinner("Generating your eBook...");
+
+    const response = await fetch("/api/export", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ format, html: htmlContent, fileName }),
+    });
+
+    const data = await response.json();
+    hideSpinner();
+
+    if (!response.ok || !data.file_url) {
+      throw new Error(data.error || "Export failed");
+    }
+
+    // ✅ Show success toast
+    showToast("✅ Your eBook is ready! Click to download", "success");
+
+    // ✅ Reveal download button
+    const saveBtn = document.getElementById("saveBtn");
+    saveBtn.classList.remove("hidden");
+    saveBtn.href = data.file_url;
+    saveBtn.setAttribute("download", fileName + "." + format);
+  } catch (err) {
+    hideSpinner();
+    showToast("❌ Export failed: " + err.message, "error");
+  }
+}
+
+function showSpinner(msg = "Loading...") {
+  const spinner = document.getElementById("spinner");
+  spinner.textContent = `🔄 ${msg}`;
+  spinner.classList.remove("hidden");
+}
+
+function hideSpinner() {
+  document.getElementById("spinner").classList.add("hidden");
+}
+
+function showToast(message, type = "info") {
+  const toast = document.createElement("div");
+  toast.textContent = message;
+  toast.className = `fixed bottom-5 right-5 bg-${type === "error" ? "red" : type === "success" ? "green" : "gray"}-600 text-white px-4 py-2 rounded shadow z-50`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 5000);
+}
