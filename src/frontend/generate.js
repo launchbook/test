@@ -247,3 +247,98 @@ function applyFormattingToPreview(formatting) {
     el.style.fontSize = formatting.headline_size || "24pt";
   });
 }
+
+async function generateEbook() {
+  const apiKey = getActiveAPIKey(); // your existing API handling
+  const topic = document.getElementById("topicInput").value;
+  const title = document.getElementById("titleInput").value;
+  const desc = document.getElementById("descInput").value;
+  const instructions = document.getElementById("ai_instructions").value;
+
+  // Get formatting settings from inputs
+  const formatting = {
+    font_family: document.getElementById("font_family").value,
+    font_size: document.getElementById("font_size").value,
+    headline_size: document.getElementById("headline_size").value,
+    text_size: document.getElementById("text_size").value,
+    line_spacing: document.getElementById("line_spacing").value,
+    text_align: document.getElementById("text_align").value,
+    margin_top: document.getElementById("margin_top").value,
+    margin_right: document.getElementById("margin_right").value,
+    margin_bottom: document.getElementById("margin_bottom").value,
+    margin_left: document.getElementById("margin_left").value,
+  };
+
+  // Add any other relevant inputs...
+  const outputFormat = document.querySelector("input[name='output_format']:checked").value;
+
+  // Build payload for AI generation
+  const payload = {
+    api_key: apiKey,
+    topic,
+    title,
+    description: desc,
+    instructions,
+    formatting,
+    output_format: outputFormat,
+    // Optional: language, audience, tone, purpose, etc.
+  };
+
+  // UI feedback
+  showSpinner(true);
+
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    if (res.ok && data.success) {
+      renderPreview(data.content); // assumes you already have this
+      applyFormattingToPreview(formatting);
+      showToast("✅ eBook generated successfully");
+    } else {
+      showToast("❌ Generation failed: " + (data.error || "Unknown error"));
+    }
+  } catch (err) {
+    console.error(err);
+    showToast("❌ Network error");
+  } finally {
+    showSpinner(false);
+  }
+}
+async function saveFormattingToSupabase() {
+  const formatting = {
+    font_family: document.getElementById("font_family").value,
+    font_size: document.getElementById("font_size").value,
+    headline_size: document.getElementById("headline_size").value,
+    text_size: document.getElementById("text_size").value,
+    line_spacing: document.getElementById("line_spacing").value,
+    text_align: document.getElementById("text_align").value,
+    margin_top: document.getElementById("margin_top").value,
+    margin_right: document.getElementById("margin_right").value,
+    margin_bottom: document.getElementById("margin_bottom").value,
+    margin_left: document.getElementById("margin_left").value,
+  };
+
+  const user = supabase.auth.getUser ? (await supabase.auth.getUser()).data.user : null;
+  if (!user) {
+    showToast("⚠️ Please sign in to save formatting");
+    return;
+  }
+
+  const { error } = await supabase
+    .from("user_settings")
+    .upsert([{ user_id: user.id, formatting }], { onConflict: ["user_id"] });
+
+  if (error) {
+    console.error(error);
+    showToast("❌ Failed to save formatting");
+  } else {
+    showToast("✅ Formatting saved!");
+    localStorage.setItem("formatting", JSON.stringify(formatting));
+    applyFormattingToPreview(formatting);
+  }
+}
