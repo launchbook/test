@@ -34,6 +34,18 @@
       <textarea rows="2" class="w-full px-4 py-2 border rounded-xl" placeholder="Brief description..."></textarea>
       <textarea rows="2" class="w-full px-4 py-2 border rounded-xl" placeholder="AI instruction or style preference..."></textarea>
 
+      <!-- 🖼️ Book Cover Options -->
+      <div class="space-y-2">
+        <label class="text-sm font-semibold text-gray-700">📕 Book Cover</label>
+        <img id="cover_preview" src="/cover-placeholder.jpg" class="w-full max-w-md rounded-xl border shadow-md" />
+        <div class="flex gap-3 mt-2">
+          <button class="bg-red-100 text-red-600 px-3 py-1 rounded">❌ Delete</button>
+          <button class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded">♻️ Regenerate</button>
+          <label for="cover_upload" class="bg-blue-100 text-blue-700 px-3 py-1 rounded cursor-pointer">📤 Upload</label>
+          <input id="cover_upload" type="file" accept="image/*" class="hidden" />
+        </div>
+      </div>
+
       <!-- 🎯 Audience / Tone / Purpose -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <select class="w-full px-4 py-2 border rounded-xl">
@@ -47,12 +59,40 @@
         </select>
       </div>
 
-      <!-- 💡 Formatting Options -->
+      <!-- 💡 Advanced Formatting (Universal Layout Control) -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <select class="px-2 py-1 border rounded"> <option>Inter</option><option>Merriweather</option> </select>
-        <select class="px-2 py-1 border rounded"> <option>12pt</option><option>14pt</option> </select>
-        <select class="px-2 py-1 border rounded"> <option>1.5</option><option>2</option> </select>
-        <select class="px-2 py-1 border rounded"> <option>A4</option><option>Letter</option> </select>
+        <select class="px-2 py-1 border rounded" id="font_type">
+          <option>Inter</option>
+          <option>Merriweather</option>
+          <option>Roboto</option>
+          <option>Playfair Display</option>
+          <option>Lato</option>
+        </select>
+        <select class="px-2 py-1 border rounded" id="font_size">
+          <option>12pt</option><option>14pt</option><option>16pt</option><option>18pt</option><option>20pt</option>
+        </select>
+        <select class="px-2 py-1 border rounded" id="line_spacing">
+          <option>1</option><option>1.5</option><option>2</option><option>2.5</option>
+        </select>
+        <select class="px-2 py-1 border rounded" id="paragraph_spacing">
+          <option>10px</option><option>12px</option><option>16px</option><option>20px</option>
+        </select>
+        <input class="px-2 py-1 border rounded" id="margin_top" placeholder="Top Margin (e.g. 1in)" value="1in" />
+        <input class="px-2 py-1 border rounded" id="margin_right" placeholder="Right Margin (e.g. 1in)" value="1in" />
+        <input class="px-2 py-1 border rounded" id="margin_bottom" placeholder="Bottom Margin (e.g. 1in)" value="1in" />
+        <input class="px-2 py-1 border rounded" id="margin_left" placeholder="Left Margin (e.g. 1in)" value="1in" />
+        <select class="px-2 py-1 border rounded" id="page_size">
+          <option>A4</option><option>Letter</option><option>6x9 in (Kindle)</option><option>5x8 in</option>
+        </select>
+        <select class="px-2 py-1 border rounded" id="text_alignment">
+          <option>justify</option><option>left</option><option>center</option>
+        </select>
+        <select class="px-2 py-1 border rounded" id="heading_size">
+          <option>Large</option><option>Medium</option><option>Small</option>
+        </select>
+        <select class="px-2 py-1 border rounded" id="text_size">
+          <option>Normal</option><option>Large</option><option>Extra Large</option>
+        </select>
       </div>
 
       <!-- 🔗 API & Affiliate CTA -->
@@ -71,18 +111,6 @@
       </div>
     </div>
 
-<!-- 🖼️ Book Cover Options -->
-<div class="space-y-2">
-  <label class="text-sm font-semibold text-gray-700">📕 Book Cover</label>
-  <img id="cover_preview" src="/cover-placeholder.jpg" class="w-full max-w-md rounded-xl border shadow-md" />
-  <div class="flex gap-3 mt-2">
-    <button class="bg-red-100 text-red-600 px-3 py-1 rounded">❌ Delete</button>
-    <button class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded">♻️ Regenerate</button>
-    <label for="cover_upload" class="bg-blue-100 text-blue-700 px-3 py-1 rounded cursor-pointer">📤 Upload</label>
-    <input id="cover_upload" type="file" accept="image/*" class="hidden" />
-  </div>
-</div>
-
     <!-- ✏️ Right Side: Editable Preview -->
     <div class="bg-white border rounded-xl p-4 space-y-6 max-h-[80vh] overflow-y-auto">
       <h2 class="text-lg font-bold text-indigo-600">📖 Editable eBook Preview</h2>
@@ -92,7 +120,7 @@
         <input class="text-lg font-semibold w-full border-b focus:outline-none" value="Chapter 1: Introduction" />
         <input class="text-md text-gray-800 w-full border-b focus:outline-none" value="The Power of Focus" />
         <textarea class="w-full h-32 border rounded p-2 focus:outline-none resize-y">
-          Welcome to the first chapter of your ebook. This section covers the basics of staying focused.
+Welcome to the first chapter of your ebook. This section covers the basics of staying focused.
         </textarea>
         <img src="/placeholder.jpg" class="w-full rounded-xl max-h-64 object-cover" />
         <div class="flex justify-between text-sm text-gray-600 pt-2">
