@@ -352,3 +352,62 @@ document.getElementById("saveBtn").addEventListener("click", async (e) => {
 
   await exportEbook(format, html, title.replace(/\s+/g, "-").toLowerCase());
 });
+document.getElementById("ebook_preview_area").addEventListener("click", async (e) => {
+  const section = e.target.closest(".ebook-section");
+  const sectionId = section?.dataset?.sectionId;
+
+  if (!section) return;
+
+  // ♻️ Regenerate Text
+  if (e.target.classList.contains("regen-text")) {
+    const title = section.querySelector(".section-title").value;
+    const headline = section.querySelector(".section-headline").value;
+    showToast("♻️ Regenerating section text...");
+
+    const res = await fetch("/api/regenerate-section", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, headline }),
+    });
+
+    const data = await res.json();
+    if (res.ok && data.text) {
+      section.querySelector(".section-body").value = data.text;
+      showToast("✅ Section text updated!");
+    } else {
+      showToast("❌ Failed to regenerate text", "error");
+    }
+  }
+
+  // 🖼️ Regenerate Image
+  if (e.target.classList.contains("regen-image")) {
+    const headline = section.querySelector(".section-headline").value;
+    showToast("🖼️ Regenerating image...");
+
+    const res = await fetch("/api/regenerate-image", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: headline }),
+    });
+
+    const data = await res.json();
+    if (res.ok && data.image_url) {
+      section.querySelector(".section-image").src = data.image_url;
+      showToast("✅ Image updated!");
+    } else {
+      showToast("❌ Failed to regenerate image", "error");
+    }
+  }
+
+  // ❌ Delete Section
+  if (e.target.classList.contains("delete-section")) {
+    section.remove();
+    showToast("🗑️ Section removed");
+  }
+
+  // 📤 Replace Image
+  if (e.target.classList.contains("replace-image")) {
+    // You can trigger a file input dynamically here if needed
+    alert("📤 Manual image upload coming in next step...");
+  }
+});
