@@ -411,3 +411,99 @@ document.getElementById("ebook_preview_area").addEventListener("click", async (e
     alert("📤 Manual image upload coming in next step...");
   }
 });
+// generate.js (continue or place inside your generate.js file)
+
+let ebookSections = [];
+
+function renderAllSections() {
+  const container = document.getElementById("ebook_preview_area");
+  container.innerHTML = "";
+  ebookSections.forEach((section, index) => {
+    const block = document.createElement("div");
+    block.className = "ebook-section border rounded-xl p-4 space-y-2 shadow-sm bg-gray-50 mb-4";
+    block.dataset.sectionId = index;
+    block.innerHTML = `
+      <input class="section-title text-lg font-semibold w-full border-b" value="${section.title || "Chapter Title"}" />
+      <input class="section-headline text-md text-gray-800 w-full border-b" value="${section.headline || "Headline"}" />
+      <textarea class="section-body w-full h-32 border rounded p-2 resize-y">${section.text || "Text content..."}</textarea>
+      <img class="section-image w-full rounded-xl max-h-64 object-cover" src="${section.image || "/placeholder.jpg"}" />
+      <div class="flex justify-between text-sm text-gray-600 pt-2">
+        <div class="flex gap-3">
+          <button class="regen-text text-indigo-600 hover:underline">♻️ Regenerate Text</button>
+          <button class="regen-image text-purple-600 hover:underline">🖼️ Regenerate Image</button>
+        </div>
+        <div class="flex gap-2">
+          <button class="replace-image text-blue-600 hover:underline">📤 Replace Image</button>
+          <button class="delete-section text-red-600 hover:underline">❌ Delete</button>
+        </div>
+      </div>
+    `;
+
+    attachSectionListeners(block, index);
+    container.appendChild(block);
+  });
+}
+
+function attachSectionListeners(block, index) {
+  block.querySelector(".delete-section").onclick = () => {
+    ebookSections.splice(index, 1);
+    renderAllSections();
+  };
+
+  block.querySelector(".regen-text").onclick = async () => {
+    const section = ebookSections[index];
+    // Call your API here
+    section.text = "[Regenerated text]";
+    renderAllSections();
+  };
+
+  block.querySelector(".regen-image").onclick = async () => {
+    const section = ebookSections[index];
+    section.image = "/placeholder-regenerated.jpg";
+    renderAllSections();
+  };
+
+  block.querySelector(".replace-image").onclick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        ebookSections[index].image = url;
+        renderAllSections();
+      }
+    };
+    input.click();
+  };
+
+  // Live sync text edits back to data
+  block.querySelector(".section-title").oninput = e => ebookSections[index].title = e.target.value;
+  block.querySelector(".section-headline").oninput = e => ebookSections[index].headline = e.target.value;
+  block.querySelector(".section-body").oninput = e => ebookSections[index].text = e.target.value;
+}
+
+// ➕ Add New Section
+function addNewSection() {
+  ebookSections.push({
+    title: "New Chapter",
+    headline: "New Headline",
+    text: "Section content here...",
+    image: "/placeholder.jpg"
+  });
+  renderAllSections();
+}
+
+document.querySelector(".add-section-button")?.addEventListener("click", addNewSection);
+
+// Initialize with one section for testing
+ebookSections = [
+  {
+    title: "Chapter 1: Introduction",
+    headline: "The Power of Focus",
+    text: "Welcome to the first chapter of your ebook. This section covers the basics of staying focused.",
+    image: "/placeholder.jpg"
+  }
+];
+renderAllSections();
