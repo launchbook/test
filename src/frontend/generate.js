@@ -226,4 +226,24 @@ async function applySavedFormatting() {
   document.getElementById("margin_right").value = f.margin_right || "1in";
   document.getElementById("margin_bottom").value = f.margin_bottom || "1in";
   document.getElementById("margin_left").value = f.margin_left || "1in";
+  
+  applyFormattingToPreview(f);
+}
+function applyFormattingToPreview(formatting) {
+  const preview = document.getElementById("ebook_preview_area");
+  if (!preview) return;
+
+  preview.style.fontFamily = formatting.font_family || "Inter";
+  preview.style.fontSize = formatting.text_size || "14pt";
+  preview.style.lineHeight = formatting.line_spacing || "1.5";
+  preview.style.textAlign = formatting.text_align || "justify";
+  preview.style.paddingTop = formatting.margin_top || "1in";
+  preview.style.paddingRight = formatting.margin_right || "1in";
+  preview.style.paddingBottom = formatting.margin_bottom || "1in";
+  preview.style.paddingLeft = formatting.margin_left || "1in";
+
+  // Apply headline size separately to headings inside blocks
+  preview.querySelectorAll(".preview-headline").forEach(el => {
+    el.style.fontSize = formatting.headline_size || "24pt";
+  });
 }
