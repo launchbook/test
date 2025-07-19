@@ -1,0 +1,24 @@
+{
+  "title": "The Day the Moon Smiled",
+  "audience": "Kids",
+  "tone": "Friendly",
+  "purpose": "Storytelling",
+  "font_family": "Comic Sans MS",
+  "font_size": "14pt",
+  "headline_size": "22pt",
+  "text_size": "14pt",
+  "line_spacing": "1.5",
+  "text_align": "left",
+  "margin_top": "1in",
+  "margin_right": "1in",
+  "margin_bottom": "1in",
+  "margin_left": "1in",
+  "sections": [
+    {
+      "headline": "Once Upon a Time",
+      "subheadline": "In the Sky Above",
+      "text": "The Moon had never smiled before. But one night, it looked down and saw all the children waving up at it...",
+      "image_url": "/img/kids/moon-smile.jpg"
+    }
+  ]
+}
