@@ -498,12 +498,15 @@ function addNewSection() {
 document.querySelector(".add-section-button")?.addEventListener("click", addNewSection);
 
 // Initialize with one section for testing
-ebookSections = [
-  {
-    title: "Chapter 1: Introduction",
-    headline: "The Power of Focus",
-    text: "Welcome to the first chapter of your ebook. This section covers the basics of staying focused.",
-    image: "/placeholder.jpg"
-  }
-];
-renderAllSections();
+document.addEventListener("DOMContentLoaded", () => {
+  ebookSections = [
+    {
+      title: "Chapter 1: Introduction",
+      headline: "The Power of Focus",
+      text: "Welcome to the first chapter of your ebook. This section covers the basics of staying focused.",
+      image: "/placeholder.jpg"
+    }
+  ];
+  renderAllSections();
+});
+
