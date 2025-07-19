@@ -204,3 +204,26 @@ function renderSections(sections) {
   };
   previewArea.appendChild(addBtn);
 }
+import { getUserSettings } from "./utils.js";
+
+// Call this once the page is ready
+async function applySavedFormatting() {
+  const settings = await getUserSettings(); // Supabase fetch
+
+  if (!settings || !settings.formatting) return;
+
+  const f = settings.formatting;
+
+  // Map settings into form fields
+  document.getElementById("font_family").value = f.font_family || "Inter";
+  document.getElementById("font_size").value = f.font_size || "14pt";
+  document.getElementById("headline_size").value = f.headline_size || "24pt";
+  document.getElementById("text_size").value = f.text_size || "14pt";
+  document.getElementById("line_spacing").value = f.line_spacing || "1.5";
+  document.getElementById("text_align").value = f.text_align || "justify";
+
+  document.getElementById("margin_top").value = f.margin_top || "1in";
+  document.getElementById("margin_right").value = f.margin_right || "1in";
+  document.getElementById("margin_bottom").value = f.margin_bottom || "1in";
+  document.getElementById("margin_left").value = f.margin_left || "1in";
+}
